@@ -2,6 +2,9 @@ package com.asnisum;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -25,9 +28,39 @@ class LongestSubstringTests {
 		// Explanation: The answer is "wke", with the length of 3.
 		// Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
 		assertEquals(3, result3);
+
+		String case4 = " ";
+		int result4 = solution(case4);
+		// Explanation: The answer is "wke", with the length of 3.
+		// Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+		assertEquals(1, result4);
+
+		String case5 = "au";
+		int result5 = solution(case5);
+		// Explanation: The answer is "wke", with the length of 3.
+		// Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+		assertEquals(2, result5);
 	}
 
 	private int solution(String str) {
-		return 0;
+		int count = 0;
+		Set<Integer> set = new HashSet<>();
+
+		for (int i = 0; i < str.length(); i++) {
+			for (int j = i; j < str.length(); j++) {
+				boolean add = set.add((int) str.charAt(j));
+				count = Math.max(count, set.size());
+				if (count >= str.length() - i) {
+					return count;
+				}
+
+				if (!add) {
+					set.clear();
+					break;
+				}
+			}
+		}
+
+		return count;
 	}
 }
